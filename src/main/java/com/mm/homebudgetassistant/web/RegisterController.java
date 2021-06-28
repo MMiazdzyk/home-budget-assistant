@@ -7,8 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @RestController
 public class RegisterController {
@@ -18,19 +17,21 @@ public class RegisterController {
         this.RegisterOperation = RegisterOperation;
     }
 
-    @GetMapping(path = "/balance")
-    public String balance() {
-        return RegisterOperation.balance().stream().map(Register::toString).collect(Collectors.joining("\n"));
+    @GetMapping(path = "/registers",
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public List<Register> balance() {
+        return RegisterOperation.getAllRegisters();
     }
 
-    @PutMapping(path = "/charge",
-            consumes = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<String> charge(@RequestBody ChargeDto chargeRequest) {
+    @PostMapping(path = "/registers/{id}/charge",
+            consumes = {MediaType.APPLICATION_JSON_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<String> chargeRegister(@RequestBody ChargeDto chargeRequest) {
         RegisterOperation.charge(chargeRequest.getRegisterName(), chargeRequest.getValue());
         return new ResponseEntity("Register \"" + chargeRequest.getRegisterName() + "\" was charged " + chargeRequest.getValue(), HttpStatus.OK);
     }
 
-    @PutMapping(path = "/transfer",
+    @PutMapping(path = "/registers/{id}/transfer",
             consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<String> transfer(@RequestBody TransferDto transferDto) {
         RegisterOperation.transfer(transferDto.getFromRegisterName(), transferDto.getToRegisterName(), transferDto.getValue());

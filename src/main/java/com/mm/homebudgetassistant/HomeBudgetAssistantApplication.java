@@ -25,7 +25,7 @@ public class HomeBudgetAssistantApplication {
     public CommandLineRunner demo(RegisterRepository RegisterRepository, RegisterOperation RegisterOperation) {
         if (!RegisterRepository.findAll().isEmpty()) {
             return (args) -> {
-                RegisterOperation.balance().stream().forEach(System.out::println);
+                RegisterOperation.getAllRegisters().stream().forEach(System.out::println);
             };
         } else
             return (args) -> {
@@ -50,7 +50,7 @@ public class HomeBudgetAssistantApplication {
                 RegisterOperation.transfer("Savings", "Insurance_policy", BigDecimal.valueOf(500));
                 RegisterOperation.transfer("Wallet", "Savings", BigDecimal.valueOf(1000));
 
-                RegisterOperation.balance().stream().forEach(System.out::println);
+                RegisterOperation.getAllRegisters().stream().forEach(System.out::println);
             };
     }
 

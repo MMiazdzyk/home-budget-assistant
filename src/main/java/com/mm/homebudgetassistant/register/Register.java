@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 public class Register {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private BigDecimal balance;

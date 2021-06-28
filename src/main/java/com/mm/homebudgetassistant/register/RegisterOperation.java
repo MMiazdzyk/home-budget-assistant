@@ -28,7 +28,7 @@ public class RegisterOperation {
         toRegister.charge(value);
     }
 
-    public List<Register> balance() {
+    public List<Register> getAllRegisters() {
         return RegisterRepository.findAll();
     }
 
