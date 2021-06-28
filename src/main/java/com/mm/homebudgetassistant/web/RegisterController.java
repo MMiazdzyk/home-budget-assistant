@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @RestController
 public class RegisterController {
-    private final com.mm.homebudgetassistant.register.RegisterOperation RegisterOperation;
+    private final RegisterOperation RegisterOperation;
 
     public RegisterController(RegisterOperation RegisterOperation) {
         this.RegisterOperation = RegisterOperation;

@@ -13,25 +13,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class RegisterOperationTest {
     @Autowired
-    private RegisterOperation RegisterOperation;
+    private RegisterOperation registerOperation;
     @Autowired
-    private RegisterRepository RegisterRepository;
+    private RegisterRepository registerRepository;
 
     @BeforeEach
     public void init(){
-        RegisterRepository.deleteAll();
+        registerRepository.deleteAll();
     }
 
     @Test
     @DisplayName("Should charge register with value")
     void shouldChargeRegisterWithValue() {
         Register Register = new Register("register", new BigDecimal(0));
-        RegisterRepository.save(Register);
+        registerRepository.save(Register);
 
-        RegisterOperation.charge("register", new BigDecimal(100));
+        registerOperation.charge("register", new BigDecimal(100));
 
         assertEquals(new BigDecimal(100).intValue(),
-                RegisterRepository.findByName("register").orElseThrow(RegisterNotFoundException::new).getBalance().intValue());
+                registerRepository.findByName("register").orElseThrow(RegisterNotFoundException::new).getBalance().intValue());
     }
 
     @Test
@@ -39,14 +39,14 @@ public class RegisterOperationTest {
     void shouldTransferBetweenRegisters() {
         Register wallet = new Register("wallet", new BigDecimal(100));
         Register savings = new Register("savings", new BigDecimal(100));
-        RegisterRepository.saveAll(Arrays.asList(wallet,savings));
+        registerRepository.saveAll(Arrays.asList(wallet,savings));
 
-        RegisterOperation.transfer("wallet","savings",new BigDecimal(100));
+        registerOperation.transfer("wallet","savings",new BigDecimal(100));
 
         assertEquals(new BigDecimal(0).intValue(),
-                RegisterRepository.findByName("wallet").orElseThrow(RegisterNotFoundException::new).getBalance().intValue());
+                registerRepository.findByName("wallet").orElseThrow(RegisterNotFoundException::new).getBalance().intValue());
         assertEquals(new BigDecimal(200).intValue(),
-                RegisterRepository.findByName("savings").orElseThrow(RegisterNotFoundException::new).getBalance().intValue());
+                registerRepository.findByName("savings").orElseThrow(RegisterNotFoundException::new).getBalance().intValue());
     }
 
     @Test
@@ -54,10 +54,10 @@ public class RegisterOperationTest {
     void shouldThrowExceptionWhenNoEnoughFounds() {
         Register wallet = new Register("wallet", new BigDecimal(50));
         Register savings = new Register("savings", new BigDecimal(100));
-        RegisterRepository.saveAll(Arrays.asList(wallet,savings));
+        registerRepository.saveAll(Arrays.asList(wallet,savings));
 
         Assertions.assertThrows(NotEnoughFundsException.class, ()-> {
-            RegisterOperation.transfer("wallet","savings", new BigDecimal(100));
+            registerOperation.transfer("wallet","savings", new BigDecimal(100));
         });
     }
 }

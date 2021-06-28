@@ -31,11 +31,11 @@ public class Register {
         return balance;
     }
 
-    protected void charge(BigDecimal value) {
+    void charge(BigDecimal value) {
         balance = balance.add(value);
     }
 
-    protected void withdraw(BigDecimal value) {
+    void withdraw(BigDecimal value) {
         if (hasFunds(value)) {
             balance = balance.subtract(value);
         } else {
