@@ -25,10 +25,10 @@ public class RegisterOperationTest {
     @Test
     @DisplayName("Should charge register with value")
     void shouldChargeRegisterWithValue() {
-        Register Register = new Register("register", new BigDecimal(0));
-        registerRepository.save(Register);
+        Register register = new Register("register", new BigDecimal(0));
+        registerRepository.save(register);
 
-        registerOperation.charge(1L, new BigDecimal(100));
+        registerOperation.charge(register.getId(), new BigDecimal(100));
 
         assertEquals(new BigDecimal(100).intValue(),
                 registerRepository.findByName("register").orElseThrow(RegisterNotFoundException::new).getBalance().intValue());
