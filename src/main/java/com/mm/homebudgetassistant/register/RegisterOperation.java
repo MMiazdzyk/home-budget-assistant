@@ -15,8 +15,8 @@ public class RegisterOperation {
     }
 
     @Transactional
-    public void charge(String name, BigDecimal value) {
-        Register Register = RegisterRepository.findByName(name).orElseThrow(RegisterNotFoundException::new);
+    public void charge(long id, BigDecimal value) {
+        Register Register = RegisterRepository.findById(id).orElseThrow(RegisterNotFoundException::new);
         Register.charge(value);
     }
 

@@ -28,7 +28,7 @@ public class RegisterOperationTest {
         Register Register = new Register("register", new BigDecimal(0));
         registerRepository.save(Register);
 
-        registerOperation.charge("register", new BigDecimal(100));
+        registerOperation.charge(1L, new BigDecimal(100));
 
         assertEquals(new BigDecimal(100).intValue(),
                 registerRepository.findByName("register").orElseThrow(RegisterNotFoundException::new).getBalance().intValue());

@@ -45,7 +45,7 @@ public class HomeBudgetAssistantApplication {
                 RegisterRepository.save(foodExpenses);
                 log.info("Insurance policy register was created: " + foodExpenses.toString());
 
-                RegisterOperation.charge("Wallet", BigDecimal.valueOf(2500));
+                RegisterOperation.charge(wallet.getId(), BigDecimal.valueOf(2500));
                 RegisterOperation.transfer("Wallet", "Food_expenses", BigDecimal.valueOf(1500));
                 RegisterOperation.transfer("Savings", "Insurance_policy", BigDecimal.valueOf(500));
                 RegisterOperation.transfer("Wallet", "Savings", BigDecimal.valueOf(1000));

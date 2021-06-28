@@ -11,7 +11,7 @@ public class Register {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private long id;
     private String name;
     private BigDecimal balance;
 
@@ -22,6 +22,8 @@ public class Register {
         this.name = name;
         this.balance = balance;
     }
+
+    public long getId() {return id;}
 
     public String getName() {
         return name;

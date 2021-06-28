@@ -24,11 +24,10 @@ public class RegisterController {
     }
 
     @PostMapping(path = "/registers/{id}/charge",
-            consumes = {MediaType.APPLICATION_JSON_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE})
-    public ResponseEntity<String> chargeRegister(@RequestBody ChargeDto chargeRequest) {
-        RegisterOperation.charge(chargeRequest.getRegisterName(), chargeRequest.getValue());
-        return new ResponseEntity("Register \"" + chargeRequest.getRegisterName() + "\" was charged " + chargeRequest.getValue(), HttpStatus.OK);
+            consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<String> chargeRegister(@RequestBody ChargeDto chargeRequest, @PathVariable Long id) {
+        RegisterOperation.charge(id, chargeRequest.getValue());
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/registers/{id}/transfer",
